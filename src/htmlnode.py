@@ -22,17 +22,22 @@ class HTMLNode():
     
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag: str, value: str, props: dict[str, str] | None = None):
+    def __init__(self, tag: str | None, value: str, props: dict[str, str] | None = None):
         super().__init__(tag, value, None, props)
         
     def to_html(self):
-        if not self.value:
+        temp_str = ""
+        if not self.value and self.value != "":
             raise ValueError("All leaf nodes must have a value")
         elif not self.tag:
             return self.value
         elif self.tag == "a":
             key, value = next(iter(self.props.items()))
             return f'''<{self.tag} {key}="{value}">{self.value}</{self.tag}>'''
+        elif self.tag == "img":
+            for key, value in self.props.items():
+                temp_str += f''' {key}="{value}"'''
+            return f"<{self.tag}{temp_str}>"
         else:
             return f'''<{self.tag}>{self.value}</{self.tag}>'''
 
