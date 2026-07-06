@@ -10,13 +10,14 @@ class TextType(Enum):
 	IMAGE = "Image"
 
 class TextNode():
-	def __init__(self, text: str, text_type: TextType, url: str | None):
+	def __init__(self, text: str, text_type: TextType, url=None):
 		self.text = text
 		self.text_type = text_type
-		if urlparse(url):
+		url_test = urlparse(url)
+		if url_test.scheme and url_test.netloc:
 			self.url = url
 		else:
-			url = None
+			self.url = None
 		
 
 	def __eq__(self, other: TextNode) -> bool:
