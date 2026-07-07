@@ -2,6 +2,7 @@ from enum import Enum
 from urllib.parse import urlparse
 from htmlnode import *
 
+
 class TextType(Enum):
 	TEXT = "Plain text"
 	BOLD = "Bold text"
@@ -27,7 +28,7 @@ class TextNode():
 			return False
 
 	def __repr__(self):
-		return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
+		return f"TextNode({self.text}, {self.text_type}, {self.url})"
 	
 
 def text_node_to_html_node(text_node: TextNode) -> LeafNode:
@@ -46,3 +47,4 @@ def text_node_to_html_node(text_node: TextNode) -> LeafNode:
 			return LeafNode(tag="img", value="", props={"src": text_node.url, "alt": text_node.text})
 		case _:	
 			raise Exception(f"{text_node.text_type} is not a valid text type")
+		
