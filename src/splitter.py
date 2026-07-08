@@ -96,7 +96,6 @@ def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
         # Append any remaining text after the final link
         if remaining_text != "":
             new_nodes.append(TextNode(remaining_text, TextType.TEXT))
-    print(f"New Nodes = {new_nodes}")            
     return new_nodes
 
 def text_to_textnode(text: str) -> list[TextNode]:
@@ -108,26 +107,26 @@ def text_to_textnode(text: str) -> list[TextNode]:
     new_list.append(append_text)
     working_list = []
 
-    #for bold
-    working_list.extend(split_nodes_delimiter(new_list, "**", TextType.BOLD))
-    temp = TextNode(working_list.pop().text, TextType.TEXT)
-    new_list = [temp]
+    if any("**" in obj.text for obj in new_list):
+        working_list.extend(split_nodes_delimiter(new_list, "**", TextType.BOLD))
+        temp = TextNode(working_list.pop().text, TextType.TEXT)
+        new_list = [temp]
+        
+    if any("_" in obj.text for obj in new_list):
+        working_list.extend(split_nodes_delimiter(new_list, "_", TextType.ITALIC))
+        temp = TextNode(working_list.pop().text, TextType.TEXT)
+        new_list = [temp]
     
-    #for italic
-    working_list.extend(split_nodes_delimiter(new_list, "_", TextType.ITALIC))
-    temp = TextNode(working_list.pop().text, TextType.TEXT)
-    new_list = [temp]
+    if any("`" in obj.text for obj in new_list):
+        working_list.extend(split_nodes_delimiter(new_list, "`", TextType.CODE))
+        temp = TextNode(working_list.pop().text, TextType.TEXT)
+        new_list = [temp]
     
-    # for code
-    working_list.extend(split_nodes_delimiter(new_list, "`", TextType.CODE))
-    temp = TextNode(working_list.pop().text, TextType.TEXT)
-    new_list = [temp]
     
-    # # for image
     working_list.extend(split_nodes_image(new_list))
     temp = TextNode(working_list.pop().text, TextType.TEXT)
     new_list = [temp]
-    
+        
     # for link:
     working_list.extend(split_nodes_link(new_list))
     if working_list[-1].text_type != TextType.LINK:

@@ -4,7 +4,12 @@ import re
 
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
-    HEADING = "heading"
+    HEADING1 = "heading 1"
+    HEADING2 = "heading 2"
+    HEADING3 = "heading 3"
+    HEADING4 = "heading 4"
+    HEADING5 = "heading 5"
+    HEADING6 = "heading 6"
     CODE = "code"
     QUOTE = "quote"
     U_LIST = "unordered list"
@@ -13,7 +18,8 @@ class BlockType(Enum):
 
 def block_to_block_type(block: str) -> BlockType:
     if re.match(r"#{1,6}\s.", block):
-        return BlockType.HEADING
+        count = block.count('#')
+        return BlockType[f"HEADING{count}"]
     elif block.startswith("```\n") and block.endswith("```"):
         return BlockType.CODE
     elif re.match(r"\>", block):
