@@ -112,22 +112,22 @@ def text_to_textnode(text: str) -> list[TextNode]:
     working_list.extend(split_nodes_delimiter(new_list, "**", TextType.BOLD))
     temp = TextNode(working_list.pop().text, TextType.TEXT)
     new_list = [temp]
-    print(f"New List (bold) = {new_list}")
+    
     #for italic
     working_list.extend(split_nodes_delimiter(new_list, "_", TextType.ITALIC))
     temp = TextNode(working_list.pop().text, TextType.TEXT)
     new_list = [temp]
-    print(f"New List (italic)= {new_list}")
+    
     # for code
     working_list.extend(split_nodes_delimiter(new_list, "`", TextType.CODE))
     temp = TextNode(working_list.pop().text, TextType.TEXT)
     new_list = [temp]
-    print(f"New List (code)= {new_list}")
+    
     # # for image
     working_list.extend(split_nodes_image(new_list))
     temp = TextNode(working_list.pop().text, TextType.TEXT)
     new_list = [temp]
-    print(f"New List (image) = {new_list}")
+    
     # for link:
     working_list.extend(split_nodes_link(new_list))
     if working_list[-1].text_type != TextType.LINK:
