@@ -13,7 +13,7 @@ from pathlib import Path
 def main():
     if len(sys.argv) > 1:
         sub_dir = Path.cwd()
-        base_path = Path(sys.argv[1])
+        base_path = sys.argv[1]
 
     else:
         sub_dir = Path.cwd()
