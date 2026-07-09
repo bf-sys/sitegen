@@ -35,7 +35,7 @@ def generate_page(from_path: Path, template_path: Path, dest_path: Path, base_pa
     
     page_title = template.replace("{{ Title }}", title)
     page_content = page_title.replace("{{ Content }}", string_html)
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 1:
         page_body = page_content.replace('href="/', f'href="/{base_path}')
     else:
         page_body = page_content
@@ -66,7 +66,7 @@ def generate_page_recursively(dir_path_content: Path, template_path: Path, dest_
     
             page_title = template.replace("{{ Title }}", title)
             page_content = page_title.replace("{{ Content }}", string_html)
-            if len(sys.argv) > 2:
+            if len(sys.argv) > 1:
                 page_body = page_content.replace('href="/', f'href="/{base_path}')
             else:
                 page_body = page_content
