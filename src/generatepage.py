@@ -63,8 +63,10 @@ def generate_page_recursively(dir_path_content: Path, template_path: Path, dest_
     
             page_title = template.replace("{{ Title }}", title)
             page_content = page_title.replace("{{ Content }}", string_html)
-
-            page_body = page_content.replace('href="/', f'href="/{base_path}')
+            if len(sys.argv) > 2:
+                page_body = page_content.replace('href="/', f'href="/{base_path}')
+            else:
+                page_body = page_content
 
             file_name = Path(dest_dir_path / "index.html")
   

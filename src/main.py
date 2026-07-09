@@ -11,20 +11,26 @@ from pathlib import Path
 
 
 def main():
-    if len(sys.argv) > 2:
-        sub_dir = sys.argv[1]
+    if len(sys.argv) > 1:
+        sub_dir = Path(sys.argv[1])
         base_path = Path(sys.argv[1])
+
     else:
         sub_dir = Path.cwd()
-        base_path = sub_dir.parent / (sub_dir.name + "/")
+        base_path = Path.cwd()
+        
+    
     public_folder = Path(sub_dir / 'docs')
     static_folder = Path(sub_dir / 'static')
     from_path = Path(sub_dir / 'content')
     template_path = Path(sub_dir)
 
+    print(f"sub_dir {sub_dir}")
+    print(f"base path {base_path}")
+
     delete_public(public_folder)
     copy_static_to_public(static_folder, public_folder)
-    # generate_page(from_path, template_path, public_folder, base_path)
+    #generate_page(from_path, template_path, public_folder, base_path)
     
     generate_page_recursively(from_path, template_path, public_folder, base_path)
     
