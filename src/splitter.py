@@ -122,11 +122,11 @@ def text_to_textnode(text: str) -> list[TextNode]:
         temp = TextNode(working_list.pop().text, TextType.TEXT)
         new_list = [temp]
     
-    
     working_list.extend(split_nodes_image(new_list))
-    temp = TextNode(working_list.pop().text, TextType.TEXT)
-    new_list = [temp]
-        
+    if working_list[-1].text_type != TextType.IMAGE:
+        temp = TextNode(working_list.pop().text, TextType.TEXT)
+        new_list = [temp]
+   
     # for link:
     working_list.extend(split_nodes_link(new_list))
     if working_list[-1].text_type != TextType.LINK:
@@ -135,7 +135,7 @@ def text_to_textnode(text: str) -> list[TextNode]:
         
         if new_list:
             working_list.extend(new_list)
-            
+
     return working_list
         
         

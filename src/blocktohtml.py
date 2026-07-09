@@ -4,7 +4,7 @@ from splitter import *
 from blocks import *
 from textnode import *
 
-def markdown_to_html_node(markdown) -> HTMLNode:
+def markdown_to_html_node(markdown: str) -> HTMLNode:
     block_list = markdown_to_blocks(markdown)
     html_parents_list = []
     for item in block_list:
@@ -17,27 +17,39 @@ def markdown_to_html_node(markdown) -> HTMLNode:
                node = ParentNode(tag="p", children=children)
                html_parents_list.append(node)
             case BlockType.HEADING1:
-               children = text_to_children(item)
+               lines = [line.strip("# ") for line in item.split("\n")]
+               paragraph = " ".join(lines)
+               children = text_to_children(paragraph)
                node = ParentNode(tag="h1", children=children)
                html_parents_list.append(node)
             case BlockType.HEADING2:
-               children = text_to_children(item)
+               lines = [line.strip("# ") for line in item.split("\n")]
+               paragraph = " ".join(lines)
+               children = text_to_children(paragraph)
                node = ParentNode(tag="h2", children=children)
                html_parents_list.append(node)
             case BlockType.HEADING3:
-               children = text_to_children(item)
+               lines = [line.strip("# ") for line in item.split("\n")]
+               paragraph = " ".join(lines)
+               children = text_to_children(paragraph)
                node = ParentNode(tag="h3", children=children)
                html_parents_list.append(node)
             case BlockType.HEADING4:
-               children = text_to_children(item)
+               lines = [line.strip("# ") for line in item.split("\n")]
+               paragraph = " ".join(lines)
+               children = text_to_children(paragraph)
                node = ParentNode(tag="h4", children=children)
                html_parents_list.append(node)
             case BlockType.HEADING5:
-               children = text_to_children(item)
+               lines = [line.strip("# ") for line in item.split("\n")]
+               paragraph = " ".join(lines)
+               children = text_to_children(paragraph)
                node = ParentNode(tag="h5", children=children)
                html_parents_list.append(node)
             case BlockType.HEADING6:
-               children = text_to_children(item)
+               lines = [line.strip("# ") for line in item.split("\n")]
+               paragraph = " ".join(lines)
+               children = text_to_children(paragraph)
                node = ParentNode(tag="h6", children=children)
                html_parents_list.append(node)
             case BlockType.CODE:
@@ -49,7 +61,9 @@ def markdown_to_html_node(markdown) -> HTMLNode:
                 code_parent = ParentNode(tag="pre", children=[code_node])
                 html_parents_list.append(code_parent)
             case BlockType.QUOTE:
-                children = text_to_children(item)
+                lines = [line.strip("> ") for line in item.split("\n")]
+                paragraph = " ".join(lines)
+                children = text_to_children(paragraph)
                 node = ParentNode(tag="blockquote", children=children)
                 html_parents_list.append(node)
             case BlockType.U_LIST:
