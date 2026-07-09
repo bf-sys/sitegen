@@ -35,8 +35,11 @@ def generate_page(from_path: Path, template_path: Path, dest_path: Path, base_pa
     
     page_title = template.replace("{{ Title }}", title)
     page_content = page_title.replace("{{ Content }}", string_html)
-
-    page_body = page_content.replace('href="/', f'href="/{base_path}')
+    if len(sys.argv) > 2:
+        page_body = page_content.replace('href="/', f'href="/{base_path}')
+    else:
+        page_body = page_content
+    
     file_name = Path(dest_path / "index.html")
   
     html_file = open(file_name, 'w')
