@@ -21,9 +21,9 @@ def copy_static_to_public(static_folder: Path, public_folder: Path):
     #broke out this functionality to make a cleaner recursive function
     for item in static_folder.iterdir():
         if item.is_file():
-            print(f"Copying file = {item}")
             file_name = item.name
             current_public_file = Path(public_folder / f"{file_name}" )
+            print(f"Copying file = {item} to {current_public_file}")
             shutil.copy(item, current_public_file)
 
         elif item.is_dir():

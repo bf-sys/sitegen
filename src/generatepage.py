@@ -1,7 +1,9 @@
 import re
 import os
+import sys
 from pathlib import Path
 from blocktohtml import *
+
 
 
 def extract_title(markdown: str) -> str:
@@ -12,7 +14,7 @@ def extract_title(markdown: str) -> str:
     raise Exception("No H1 header (title) found")
 
 
-def generate_page(from_path: Path, template_path: Path, dest_path: Path):
+def generate_page(from_path: Path, template_path: Path, dest_path: Path, base_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     for file in from_path.iterdir():
         if file.name.endswith(".md"):
@@ -32,8 +34,9 @@ def generate_page(from_path: Path, template_path: Path, dest_path: Path):
 
     
     page_title = template.replace("{{ Title }}", title)
-    page_body = page_title.replace("{{ Content }}", string_html)
+    page_content = page_title.replace("{{ Content }}", string_html)
 
+    page_body = page_content.replace('href="/', f'href="/{base_path}')
     file_name = Path(dest_path / "index.html")
   
     html_file = open(file_name, 'w')
@@ -41,7 +44,7 @@ def generate_page(from_path: Path, template_path: Path, dest_path: Path):
 
     return page_body
 
-def generate_page_recursively(dir_path_content: Path, template_path: Path, dest_dir_path:Path):
+def generate_page_recursively(dir_path_content: Path, template_path: Path, dest_dir_path: Path, base_path):
     for file in dir_path_content.iterdir():
         if file.name.endswith(".md"):
             print(f"Generating page from {dir_path_content} to {dest_dir_path} using {template_path}")
@@ -59,7 +62,9 @@ def generate_page_recursively(dir_path_content: Path, template_path: Path, dest_
 
     
             page_title = template.replace("{{ Title }}", title)
-            page_body = page_title.replace("{{ Content }}", string_html)
+            page_content = page_title.replace("{{ Content }}", string_html)
+
+            page_body = page_content.replace('href="/', f'href="/{base_path}')
 
             file_name = Path(dest_dir_path / "index.html")
   
@@ -71,4 +76,4 @@ def generate_page_recursively(dir_path_content: Path, template_path: Path, dest_
             current_content_folder = Path(file)
             print(f"Creating directory - {current_dest_folder}")
             os.mkdir(current_dest_folder)
-            generate_page_recursively(current_content_folder, template_path, current_dest_folder)
+            generate_page_recursively(current_content_folder, template_path, current_dest_folder, base_path)
