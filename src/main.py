@@ -27,9 +27,9 @@ def main():
 
     delete_public(public_folder)
     copy_static_to_public(static_folder, public_folder)
-    generate_page(from_path, template_path, public_folder, base_path)
+    #generate_page(from_path, template_path, public_folder, base_path)
     
-    #generate_page_recursively(from_path, template_path, public_folder, base_path)
+    generate_page_recursively(from_path, template_path, public_folder, base_path)
     
     # md = "![Image of Glorfindel](/home/bryan/workspace/sitegen/static/images/glorfindel.png)"
     # node = text_to_textnode(md)
