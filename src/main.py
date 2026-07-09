@@ -1,3 +1,4 @@
+import sys
 from textnode import *
 from htmlnode import *
 from splitter import *
@@ -9,14 +10,21 @@ from pathlib import Path
 
 
 
-sub_dir = Path.cwd()
-public_folder = Path(sub_dir / 'public')
-static_folder = Path(sub_dir / 'static')
-from_path = Path(sub_dir / 'content')
-template_path = Path(sub_dir)
+
 
 
 def main():
+    if len(sys.argv) > 2:
+        sub_dir = sys.argv[1]
+    else:
+        sub_dir = Path.cwd()
+    
+    public_folder = Path(sub_dir / 'docs')
+    static_folder = Path(sub_dir / 'static')
+    from_path = Path(sub_dir / 'content')
+    template_path = Path(sub_dir)
+
+
     delete_public(public_folder)
     copy_static_to_public(static_folder, public_folder)
     #generate_page(from_path, template_path, public_folder)
