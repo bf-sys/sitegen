@@ -104,7 +104,6 @@ def text_to_children(text) -> list[HTMLNode]:
     htmlnode_list = []
     for item in textnode_list:
         htmlnode_list.append(text_node_to_html_node(item))
-    print(*htmlnode_list, sep='\n')
     return htmlnode_list
 
        

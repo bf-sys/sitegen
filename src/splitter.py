@@ -121,23 +121,14 @@ def text_to_textnode(text: str) -> list[TextNode]:
         working_list.extend(split_nodes_delimiter(new_list, "`", TextType.CODE))
         temp = TextNode(working_list.pop().text, TextType.TEXT)
         new_list = [temp]
-    # temp
-    #print(f"New List before image split {new_list}")
     
     if any("![" in obj.text for obj in new_list):
         working_list.extend(split_nodes_image(new_list))
-        print(f"working_list[-1] test = {working_list[-1]}{working_list[-1].text}{working_list[-1].text_type}")
-       
         if working_list[-1].text_type != TextType.IMAGE:
             temp = TextNode(working_list.pop().text, TextType.TEXT)
             new_list = [temp]
         else:
             new_list = []
-        print(f"new list = {new_list}")
-   
-    #temp
-    #print(f"Working List after image split {new_list}")
-
 
     if not any("![" in obj.text for obj in new_list) and any("](" in obj.text for obj in new_list):
         working_list.extend(split_nodes_link(new_list))
